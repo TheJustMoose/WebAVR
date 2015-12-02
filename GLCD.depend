@@ -8,3 +8,12 @@
 	<avr/pgmspace.h>
 	<util/delay.h>
 
+1444242147 source:c:\projects\github\webavr\fuse.c
+	<avr/io.h>
+
+1449084512 source:c:\projects\github\webavr\main.cpp
+	<avr/io.h>
+	<avr/cpufunc.h>
+	<avr/pgmspace.h>
+	<util/delay.h>
+

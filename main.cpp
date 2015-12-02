@@ -287,6 +287,10 @@ const BYTE font_6x8[8*256] PROGMEM = {
 0x00, 0x00, 0x38, 0x48, 0x38, 0x28, 0x48, 0x00  // я 255
 };
 
+//const char test_string[] = "Тестовая строка!";
+const char test_string[] = "Test string!";
+const char fw_ver[] PROGMEM = "0.1 Test FrameBuf";
+
 // 128 bits x 64 == 16 byte x 64
 BYTE *FrameBuf = 0;
 
@@ -378,20 +382,18 @@ void Print(char c) {
   dst += (pos & 0xF0) << 3; // Y
   int ascii = c;
   for (int i = 0; i < 8; i++) {
-    *dst = pgm_read_byte(&font_6x8[ascii + i]);
+    *dst = pgm_read_byte(&font_6x8[ascii*8 + i]);
     dst += 16; // следующая линия
   }
 }
 
 // выводим строку
 //
-void Print(char *p) {
-  while (!p) {
+void Print(const char *p) {
+  while (*p) {
     Print(*p++);
     NextPos();
   }
-
-  Frame2LCD(FrameBuf);
 }
 
 void Write(uint16_t Addr, uint8_t Data) {
@@ -454,9 +456,6 @@ void Init(bool LeftLCD, bool RightLCD) {
         SendData(c, LeftLCD, RightLCD);
     }
 }
-
-const char test_string[] PROGMEM = "Тестовая строка!";
-const char fw_ver[] PROGMEM = "0.1 Test FrameBuf";
 
 char str[32];
 
@@ -534,18 +533,30 @@ int main(void) {
         _delay_ms(1000);
 
         ClrFrame();
-        Print('@');
+        Print('%');
+        NextPos();
+        Print('1');
+        NextPos();
+        Frame2LCD(FrameBuf);
+        _delay_ms(1000);
+
+        str[0] = '@';
+        Print(str[0]);
+        NextPos();
         Frame2LCD(FrameBuf);
         _delay_ms(1000);
 
         ClrFrame();
-        str[0] = '%';
+        str[0] = '@';
         str[1] = 0;
         Print(str);
         Frame2LCD(FrameBuf);
         _delay_ms(1000);
 
-        //strcpy_P(str, (PGM_P)pgm_read_word(&test_string));
+        ClrFrame();
+        Print(test_string);
+        Frame2LCD(FrameBuf);
+        _delay_ms(2000);
     }
 
     return 0;
