@@ -479,8 +479,9 @@ void ShowASCII(uint16_t Shift) {
 }
 
 void ClrFrame() {
-    for (int i = 0; i < 1024; i++)
-        FrameBuf[i] = 0;
+  pos = 0;
+  for (int i = 0; i < 1024; i++)
+    FrameBuf[i] = 0;
 }
 
 int main(void) {
@@ -494,15 +495,7 @@ int main(void) {
 
     _delay_ms(1250);
 
-    //strcpy_P(str, (PGM_P)pgm_read_word(&test_string));
-    //Print(str);
-
-    //_delay_ms(1250);
-
     FrameBuf = (BYTE *)2048;
-    /*for (int i = 0; i < 16*64; i++)
-        FrameBuf[i] = (i / 16) + 1;
-    Frame2LCD(FrameBuf);*/
 
     BYTE c[8] = {0x10, 0x10, 0x10, 0x10, 0x10, 0x00, 0x10, 0x00}; // == !
     Transposition(c, true, false);
@@ -522,21 +515,7 @@ int main(void) {
         FrameBuf[i*16] = c3[i];
     }
 
-    //ByteMatrix2LCD(FrameBuf, true, false);
     ClrFrame();
-
-    /*for (uint8_t k = 0; k < 8; k++) {
-      for (uint8_t j = 0; j < 16; j++) {
-        for (uint8_t i = 0; i < 8; i++) {
-          BYTE c = pgm_read_byte(&font_6x8[k*16*8 + j*8 + i]);
-          FrameBuf[k*16*8 + j + i*16] = c;
-        }
-      }
-
-      Frame2LCD(FrameBuf);
-      Park();
-      _delay_ms(1000);
-    }*/
 
     Park();
     _delay_ms(250);
@@ -555,10 +534,18 @@ int main(void) {
         _delay_ms(1000);
 
         ClrFrame();
-        strcpy_P(str, (PGM_P)pgm_read_word(&test_string));
+        Print('@');
+        Frame2LCD(FrameBuf);
+        _delay_ms(1000);
+
+        ClrFrame();
+        str[0] = '%';
+        str[1] = 0;
         Print(str);
         Frame2LCD(FrameBuf);
         _delay_ms(1000);
+
+        //strcpy_P(str, (PGM_P)pgm_read_word(&test_string));
     }
 
     return 0;
