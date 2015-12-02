@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1444242147 source:c:\projects\gcc1\glcd\fuse.c
+	<avr/io.h>
+
+1448996852 source:c:\projects\gcc1\glcd\main.cpp
+	<avr/io.h>
+	<avr/cpufunc.h>
+	<avr/pgmspace.h>
+	<util/delay.h>
+
