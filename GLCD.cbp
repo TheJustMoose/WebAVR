@@ -14,6 +14,7 @@
 				<Option compiler="avr-gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add option="-fexec-charset=cp1251" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -24,6 +25,7 @@
 				<Option compiler="avr-gcc" />
 				<Compiler>
 					<Add option="-Os" />
+					<Add option="-fexec-charset=cp1251" />
 				</Compiler>
 			</Target>
 			<Environment>
