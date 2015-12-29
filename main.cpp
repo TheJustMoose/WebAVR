@@ -468,11 +468,11 @@ void Park() {
 }
 
 void ShowASCII(uint16_t Shift) {
-    for (uint8_t k = 0; k < 8; k++) {
-      for (uint8_t j = 0; j < 16; j++) {
-        for (uint8_t i = 0; i < 8; i++) {
-          BYTE c = pgm_read_byte(&font_6x8[Shift + k*16*8 + j*8 + i]);
-          FrameBuf[k*16*8 + j + i*16] = c;
+    for (uint8_t pos_y = 0; pos_y < 8; pos_y++) {
+      for (uint8_t pos_x = 0; pos_x < 16; pos_x++) {
+        for (uint8_t sym_y = 0; sym_y < 8; sym_y++) {
+          BYTE c = pgm_read_byte(&font_6x8[Shift + pos_y*16*8 + pos_x*8 + sym_y]);
+          FrameBuf[pos_y*16*8 + pos_x + sym_y*16] = c; // 1 LCD line == 16 RAM bytes
         }
       }
     }
